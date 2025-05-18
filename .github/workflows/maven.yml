@@ -13,7 +13,7 @@ on:
     - 'src/**'
     - 'pom.xml'
     - '.github/workflows/maven.yml'
-
+	
   # Whenever someone submits a new pull request which modified the pom or a source file,
   # we want to ensure it compiles successfully and that all tests will pass.
   pull_request:
@@ -26,7 +26,7 @@ jobs:
     name: Maven compiler
     runs-on: ubuntu-latest
     steps:
-
+	
     # 1. Check out the current working tree
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -38,22 +38,14 @@ jobs:
         distribution: 'adopt'
         java-package: jdk
         java-version: '17'
-
-    # 3. Setup local Maven package cache to speed up building
-    - name: Cache Maven packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
-
-    # 4. Build via Maven 
+		
+    # 3. Build via Maven 
     - name: Build via Maven
-      run: mvn verify -B --file pom.xml -DdisableXmlReport=true
-
-    # 5. Upload built jar as artifact
-    - name: Upload JAR artifact
-      uses: actions/upload-artifact@v4
+      run: mvn clean install
+	  
+	# 4. Upload built jar as artifact
+    - uses: actions/upload-artifact@v4
       with:
         name: mcMMO
-        path: target/*.jar
+        path: |
+          target/*.jar
