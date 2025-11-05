@@ -183,7 +183,7 @@ public class TreasureConfig extends BukkitConfig {
                     reason.add("Potion format for " + FILENAME + " has changed");
                     continue;
                 } else {
-                    item = new ItemStack(mat, amount, data);
+                    item = new ItemStack(mat, amount);
                     PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
                     if (potionMeta == null) {
                         mcMMO.p.getLogger().severe(
